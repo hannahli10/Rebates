@@ -3,7 +3,6 @@ package com.rebates.model;
 import java.math.BigDecimal;
 
 public class Rebate {
-    public Rebate(){}
     private long id;
     private String name;
     private String link;
