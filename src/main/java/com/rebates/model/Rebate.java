@@ -1,11 +1,15 @@
 package com.rebates.model;
 
+import java.beans.Transient;
 import java.math.BigDecimal;
 
 public class Rebate {
     private long id;
     private String name;
     private String link;
+
+//    @Transient
+//    private long ProviderId;
 
     public long getId() {
         return id;
@@ -57,6 +61,19 @@ public class Rebate {
 
     public long getEndTime() {
         return endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Rebate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", link='" + link + '\'' +
+                ", rebateType='" + rebateType + '\'' +
+                ", value=" + value +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 
     public void setEndTime(long endTime) {

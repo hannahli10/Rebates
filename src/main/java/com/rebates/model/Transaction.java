@@ -15,6 +15,16 @@ public class Transaction {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", purchaseTime=" + purchaseTime +
+                ", orderId='" + orderId + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
+
     public long getPurchaseTime() {
         return purchaseTime;
     }
