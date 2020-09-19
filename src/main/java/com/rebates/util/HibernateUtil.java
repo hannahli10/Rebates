@@ -18,6 +18,8 @@ import java.util.Properties;
 public class HibernateUtil {
     private static Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
     private static SessionFactory sessionFactory;
+    private HibernateUtil(){};
+
 
     static {
         try {
@@ -40,7 +42,6 @@ public class HibernateUtil {
         String dbUser = System.getProperty("database.user");
         String dbPassword = System.getProperty("database.password");
         String[] modelPackages = {"com.rebates.model"};
-
 
         //create Java based Hibernate Configurations
         Configuration configuration = new Configuration();
