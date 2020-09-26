@@ -1,12 +1,27 @@
 package com.rebates.model;
 
-import java.beans.Transient;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+
+@Entity
+@Table(name = "rebates")
 public class Rebate {
+    public Rebate(){}
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column (name = "id")
     private long id;
+    @Column (name = "name")
     private String name;
+    @Column (name = "link")
     private String link;
+    @Column (name = "rebate_type")
+    private String rebateType;
+    @Column (name = "value")
+    private BigDecimal value;
+
+
 
 //    @Transient
 //    private long ProviderId;
@@ -14,54 +29,35 @@ public class Rebate {
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getLink() {
         return link;
     }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public String getRebateType() {
         return rebateType;
     }
-
-    public void setRebateType(String rebateType) {
-        this.rebateType = rebateType;
-    }
-
     public BigDecimal getValue() {
         return value;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setLink(String link) {
+        this.link = link;
+    }
+    public void setRebateType(String rebateType) {
+        this.rebateType = rebateType;
+    }
     public void setValue(BigDecimal value) {
         this.value = value;
     }
 
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
 
     @Override
     public String toString() {
@@ -71,17 +67,9 @@ public class Rebate {
                 ", link='" + link + '\'' +
                 ", rebateType='" + rebateType + '\'' +
                 ", value=" + value +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
                 '}';
     }
 
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
 
-    private String rebateType;
-    private BigDecimal value;
-    private long startTime;
-    private long endTime;
+
 }

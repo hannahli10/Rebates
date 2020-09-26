@@ -10,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RebateDaoImpl implements RebateDao {
-    private Logger logger = LoggerFactory.getLogger(RebateDaoImpl.class);
+public class RebateJDBCDaoImpl implements RebateDao {
+    private Logger logger = LoggerFactory.getLogger(RebateJDBCDaoImpl.class);
     //STEP 1: Database information
     private static final String DB_URL = "jdbc:postgresql://localhost:5430/ascending-14";
     private static final String USER = "admin";
