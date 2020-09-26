@@ -1,14 +1,14 @@
-package com.rebates.jdbc;
+package com.rebates.dao;
 
 import com.rebates.model.Rebate;
 
 import java.util.List;
 
-public interface RebateJDBCDao {
+public interface RebateDao {
     Rebate save (Rebate rebate);
     Rebate update (Rebate rebate);
-    Boolean deleteByName(String rebateName);
-    Boolean delete (Rebate rebate);
+    boolean deleteByName(String rebateName);
+    boolean delete (Rebate rebate);
     List<Rebate> getRebates();
     Rebate getRebateById(Long id);
 }

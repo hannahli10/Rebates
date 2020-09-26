@@ -1,5 +1,6 @@
 package com.rebates.jdbc;
 
+import com.rebates.dao.RebateDao;
 import com.rebates.model.Rebate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RebateJDBCDaoImpl implements RebateJDBCDao{
-    private Logger logger = LoggerFactory.getLogger(RebateJDBCDaoImpl.class);
+public class RebateDaoImpl implements RebateDao {
+    private Logger logger = LoggerFactory.getLogger(RebateDaoImpl.class);
     //STEP 1: Database information
     private static final String DB_URL = "jdbc:postgresql://localhost:5430/ascending-14";
     private static final String USER = "admin";
@@ -27,15 +28,14 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
 
             //STEP 3: Execute a query
             logger.debug("Insert statement...");
-            String SQL_INSERT = "INSERT Rebate (ID,NAME,LINK,REBETATYPE,VALUE,STARTTIME,ENDTIME) VALUES (?,?,?,?,?,?,?)";;
+            String SQL_INSERT = "INSERT into Rebates (NAME,LINK,REBETA_TYPE,VALUE) VALUES (?,?,?,?)";;
             preparedStatement = conn.prepareStatement(SQL_INSERT);
-            preparedStatement.setLong(1, rebate.getId());
-            preparedStatement.setString(2, rebate.getName());
-            preparedStatement.setString(3,rebate.getLink()) ;
-            preparedStatement.setString(4,rebate.getRebateType());
-            preparedStatement.setBigDecimal(5,rebate.getValue());
-            preparedStatement.setLong(6,rebate.getStartTime());
-            preparedStatement.setLong(7,rebate.getEndTime());
+            preparedStatement.setString(1, rebate.getName());
+            preparedStatement.setString(2,rebate.getLink()) ;
+            preparedStatement.setString(3,rebate.getRebateType());
+            preparedStatement.setBigDecimal(4,rebate.getValue());
+
+
 
             int row = preparedStatement.executeUpdate();
             if (row > 0 )
@@ -69,15 +69,14 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
 
             //STEP 3: Execute a query
             logger.debug("Update statement...");
-            String SQL_INSERT = "UPDATE Rebate (ID,NAME,LINK,REBETATYPE,VALUE,STARTTIME,ENDTIME) VALUES (?,?,?,?,?,?,?)";;
+            String SQL_INSERT = "UPDATE Rebates (NAME,LINK,REBETA_TYPE,VALUE) VALUES (?,?,?,?)";
             preparedStatement = conn.prepareStatement(SQL_INSERT);
-            preparedStatement.setLong(1, rebate.getId());
-            preparedStatement.setString(2, rebate.getName());
-            preparedStatement.setString(3,rebate.getLink()) ;
-            preparedStatement.setString(4,rebate.getRebateType());
-            preparedStatement.setBigDecimal(5,rebate.getValue());
-            preparedStatement.setLong(6,rebate.getStartTime());
-            preparedStatement.setLong(7,rebate.getEndTime());
+            preparedStatement.setString(1, rebate.getName());
+            preparedStatement.setString(2,rebate.getLink());
+            preparedStatement.setString(3,rebate.getRebateType());
+            preparedStatement.setBigDecimal(4,rebate.getValue());
+
+
 
             int row = preparedStatement.executeUpdate();
             if (row > 0 )
@@ -100,12 +99,41 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
 
 
     @Override
-    public Boolean deleteByName(String rebateName) {
-        return null;
+    public boolean deleteByName(String rebateName) {
+        boolean rebateDeleted = false;
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        try{
+            //STEP 2: Open a connection
+            logger.info("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //STEP 3: Execute a query
+            logger.debug("Delete statement by name...");
+            String SQL_INSERT = "DELETE FROM Rebates where Name=?";
+            preparedStatement = conn.prepareStatement(SQL_INSERT);
+            preparedStatement.setString(1, rebateName);
+            int row = preparedStatement.executeUpdate();
+            if(row > 0)
+                rebateDeleted = true;
+        }catch (Exception e){
+            logger.error("delete by name failed(...) for Rebate throws SQLException error"+e.getMessage());
+
+        }finally {
+//            STEP 4: finally block used to close resources
+            try{
+                if(preparedStatement != null) preparedStatement.close();
+                if(conn != null) conn.close();
+            }catch(SQLException se) {
+                logger.error("delete by name close failed(...) for Rebate throws SQLException error"+se.getMessage());
+            }
+        }
+        return rebateDeleted;
     }
 
     @Override
-    public Boolean delete(Rebate rebate) {
+    public boolean delete(Rebate rebate) {
+        boolean rebateDeleted = false;
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         try{
@@ -115,19 +143,18 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
 
             //STEP 3: Execute a query
             logger.debug("Delete statement...");
-            String SQL_INSERT = "DELETE Rebate (ID,NAME,LINK,REBETATYPE,VALUE,STARTTIME,ENDTIME) VALUES (?,?,?,?,?,?,?)";;
+            String SQL_INSERT = "DELETE Rebates where rebates.id = :Id";;
             preparedStatement = conn.prepareStatement(SQL_INSERT);
-            preparedStatement.setLong(1, rebate.getId());
-            preparedStatement.setString(2, rebate.getName());
-            preparedStatement.setString(3,rebate.getLink()) ;
-            preparedStatement.setString(4,rebate.getRebateType());
-            preparedStatement.setBigDecimal(5,rebate.getValue());
-            preparedStatement.setLong(6,rebate.getStartTime());
-            preparedStatement.setLong(7,rebate.getEndTime());
+            preparedStatement.setString(1, rebate.getName());
+            preparedStatement.setString(2,rebate.getLink()) ;
+            preparedStatement.setString(3,rebate.getRebateType());
+            preparedStatement.setBigDecimal(4,rebate.getValue());
+
+
 
             int row = preparedStatement.executeUpdate();
             if (row > 0 )
-                return true;
+                rebateDeleted = true;
 
         }catch(SQLException e){
             logger.error("delete failed(...) for Rebate throws SQLException error"+e.getMessage());
@@ -141,7 +168,7 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
                 logger.error("delete close failed(...) for Rebate throws SQLException error"+se.getMessage());
             }
         }
-        return false;
+        return rebateDeleted;
     }
 
 
@@ -162,7 +189,7 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
             logger.debug("Creating statement...");
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT * FROM Rebate";
+            sql = "SELECT * FROM Rebates";
             rs = stmt.executeQuery(sql);
 
             //STEP 4: Extract data from result set
@@ -173,8 +200,6 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
                 String link=rs.getNString("link") ;
                 String rebateType=rs.getNString("rebate_type");
                 BigDecimal value=rs.getBigDecimal("value");
-                Long startTime=rs.getLong("start_time");
-                Long endTime=rs.getLong("end_time");
                 //Fill the object
                 Rebate rebate = new Rebate();
                 rebate.setId(id);
@@ -182,8 +207,6 @@ public class RebateJDBCDaoImpl implements RebateJDBCDao{
                 rebate.setLink(link);
                 rebate.setRebateType(rebateType);
                 rebate.setValue(value);
-                rebate.setStartTime(startTime);
-                rebate.setEndTime(endTime);
                 rebates.add(rebate);
             }
         }catch(SQLException se) {
