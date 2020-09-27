@@ -2,6 +2,8 @@ package com.rebates.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -22,9 +24,14 @@ public class Rebate {
     private BigDecimal value;
 
 
+//    @ManyToOne(fetch =FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
 
-//    @Transient
-//    private long ProviderId;
+    @OneToMany (mappedBy = "rebate",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Transaction> transactions;
+
 
     public long getId() {
         return id;
@@ -40,6 +47,15 @@ public class Rebate {
     }
     public BigDecimal getValue() {
         return value;
+    }
+    public Set<Transaction> getTransactions() {
+        if (transactions == null)
+            transactions = new HashSet<Transaction>();
+        return transactions;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public void setId(long id) {
@@ -69,7 +85,4 @@ public class Rebate {
                 ", value=" + value +
                 '}';
     }
-
-
-
 }

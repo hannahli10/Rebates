@@ -21,6 +21,10 @@ public class Transaction {
     @Column(name = "amount")
     private BigDecimal amount;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rebate_id")
+    private Rebate rebate;
+
 
     public long getId() {
         return id;
