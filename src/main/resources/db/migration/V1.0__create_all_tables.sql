@@ -3,31 +3,29 @@
 
 CREATE TABLE providers(
 /*id             INTEGER NOT NULL default nextval(‘account_id_seq’),*/
-    id                BIGSERIAL NOT NULL,
+    id                BIGSERIAL,
     name              VARCHAR(30) not null unique
 );
 
 
 CREATE TABLE rebates(
 /*id             INTEGER NOT NULL default nextval(‘account_id_seq’),*/
-    id                BIGSERIAL NOT NULL,
+    id                BIGSERIAL,
     name              VARCHAR(30) not null unique,
     link              VARCHAR(150),
     rebate_type       VARCHAR(30),
     value             NUMERIC(10, 2),
-    start_time        TIMESTAMP default CURRENT_TIMESTAMP,
-    end_time          TIMESTAMP,
     provider_id       BIGINT NOT NULL
 );
 
 
 CREATE TABLE transactions(
 /*id             INTEGER NOT NULL default nextval(‘account_id_seq’),*/
-    id                         BIGSERIAL NOT NULL,
-    purchase_time              TIMESTAMP default CURRENT_TIMESTAMP,
+    id                         BIGSERIAL,
+    purchase_time              TIMESTAMP,
     order_id                   VARCHAR(30),
     amount                     NUMERIC(10, 2),
-    rebate_id                 BIGINT NOT NULL
+    rebate_id                  BIGINT NOT NULL
 );
 
 
