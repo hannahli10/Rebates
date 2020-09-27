@@ -67,19 +67,19 @@ public class HibernateUtil {
         return loadSessionFactory();
     }
 
-//    public static Session getSession() throws HibernateException {
-//        Session retSession = null;
-//        try {
-//            retSession = sessionFactory.openSession();
-//        }catch(Throwable t){
-//            logger.error("Exception while getting session.. ");
-//            t.printStackTrace();
-//        }
-//        if(retSession == null) {
-//            logger.error("session is discovered null");
-//        }
-//        return retSession;
-//    }
+    public static Session getSession() throws HibernateException {
+        Session retSession = null;
+        try {
+            retSession = sessionFactory.openSession();
+        }catch(Throwable t){
+            logger.error("Exception while getting session.. ");
+            t.printStackTrace();
+        }
+        if(retSession == null) {
+            logger.error("session is discovered null");
+        }
+        return retSession;
+    }
 
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -91,7 +91,8 @@ public class HibernateUtil {
         session.close();
 
     }
- }
+
+}
 
 
 
