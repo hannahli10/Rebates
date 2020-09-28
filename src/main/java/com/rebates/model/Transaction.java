@@ -51,6 +51,9 @@ public class Transaction {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public void setRebate(Rebate rebate) {
+        this.rebate = rebate;
+    }
 
 
 
@@ -63,5 +66,4 @@ public class Transaction {
                 ", amount=" + amount +
                 '}';
     }
-
 }

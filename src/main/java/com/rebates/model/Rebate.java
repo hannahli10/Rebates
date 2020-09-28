@@ -24,13 +24,18 @@ public class Rebate {
     private BigDecimal value;
 
 
-//    @ManyToOne(fetch =FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch =FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "provider_id")
     private Provider provider;
 
     @OneToMany (mappedBy = "rebate",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Transaction> transactions;
+
+    public void addTransaction(Transaction transaction){
+        this.getTransactions().add(transaction);
+        transaction.setRebate(this);
+    }
 
 
     public long getId() {
@@ -84,5 +89,13 @@ public class Rebate {
                 ", rebateType='" + rebateType + '\'' +
                 ", value=" + value +
                 '}';
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 }

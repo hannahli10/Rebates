@@ -16,9 +16,16 @@ public class Provider {
     private String name;
 
 
-    //    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Rebate> rebates;
+
+    public void addRebate(Rebate rebate){
+        this.getRebates().add(rebate);
+        rebate.setProvider(this);
+    }
+
 
 
     public long getId() {
@@ -37,22 +44,22 @@ public class Provider {
         this.rebates = rebates;
     }
 
-        public void setId ( long id){
+    public void setId ( long id){
             this.id = id;
-        }
-        public void setName (String name){
-            this.name = name;
-        }
-
-
-        @Override
-        public String toString () {
-            return "Provider{" +
-                    "id=" + id +
-                    ", name='" + name + '\'' +
-                    '}';
-        }
     }
+    public void setName (String name){
+            this.name = name;
+    }
+
+
+    @Override
+    public String toString () {
+        return "Provider{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
 
 
 
