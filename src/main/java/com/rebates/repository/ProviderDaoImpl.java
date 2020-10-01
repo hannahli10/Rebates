@@ -10,9 +10,11 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class ProviderDaoImpl implements ProviderDao {
     private Logger logger = LoggerFactory.getLogger(ProviderDaoImpl.class);
     @Override
@@ -22,7 +24,7 @@ public class ProviderDaoImpl implements ProviderDao {
         Session session = sessionFactory.openSession();
         try{
             transaction = session.beginTransaction();
-            session.save(provider);
+            session.saveOrUpdate(provider);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -67,7 +69,8 @@ public class ProviderDaoImpl implements ProviderDao {
 
     @Override
     public List<Provider> getProviders() {
-        String hql = "FROM Provider";
+        //hql FetchType EAGER through table mapped is LAZY
+        String hql = "select distinct pro FROM Provider as pro left join fetch pro.rebates as reb left join fetch reb.transactions";
         try (Session session = HibernateUtil.getSession()) {
             Query<Provider> query = session.createQuery(hql);
             return query.list();

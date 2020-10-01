@@ -24,7 +24,7 @@ public class RebateDaoImpl implements RebateDao {
         Session session = sessionFactory.openSession();
         try{
             transaction = session.beginTransaction();
-            session.save(rebate);
+            session.saveOrUpdate(rebate);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -38,7 +38,21 @@ public class RebateDaoImpl implements RebateDao {
 
     @Override
     public Rebate update(Rebate rebate) {
-        return null;
+        Transaction transaction = null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        try{
+            transaction = session.beginTransaction();
+            session.update(rebate);
+            transaction.commit();
+            session.close();
+        }catch (Exception e){
+            if(transaction != null)
+                transaction.rollback();
+            logger.error("fail to update record,error=()",e.getMessage());
+            session.close();
+        }
+        return rebate;
     }
 
     @Override
