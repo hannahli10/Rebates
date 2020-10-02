@@ -32,29 +32,29 @@ public class ProviderDaoTest {
     private Logger logger = LoggerFactory.getLogger(ProviderDaoTest.class);
 @Autowired
     private ProviderDao providerDao;
+    private String testProvider = "Test_Ulta";
+    private Provider p1;
 
-    private Provider testProvider;
-    private String providerName;
-    private Rebate rebate1;
-    private Rebate rebate2;
-    private Transaction transaction1;
-    private Transaction transaction2;
-//    private LocalDateTime transactionDateTime = new LocalDateTime(2020-05-01,12/30/00);
+//    private Provider testProvider;
+//    private String providerName;
+//    private Rebate rebate1;
+//    private Rebate rebate2;
+//    private Transaction transaction1;
+//    private Transaction transaction2;
+////    private LocalDateTime transactionDateTime = new LocalDateTime(2020-05-01,12/30/00);
 
     public ProviderDaoTest() {
     }
 
-    @BeforeClass
-    public static void setupOnce(){
-//        providerDao = new ProviderDaoImpl();
-        }
-
     @Before
     public void setUp() {
+        p1 = new Provider();
+        p1.setName(testProvider);
+        providerDao.save(p1);
 //        providerDao =new ProviderDaoImpl();
-        providerName = "Test-Ulta";
-        testProvider = new Provider();
-        testProvider.setName(providerName);
+//        providerName = "Test-Ulta";
+//        testProvider = new Provider();
+//        testProvider.setName(providerName);
 
 //        rebate1 = new Rebate();
 //        rebate1.setName("Ibotta");
@@ -93,9 +93,7 @@ public class ProviderDaoTest {
 ////        transaction2.setRebate(rebate2);
 //        rebate2.addTransaction(transaction2);
 //
-//
-
-        testProvider= providerDao.save(testProvider);
+//        testProvider= providerDao.save(testProvider);
 
 
 
@@ -105,14 +103,14 @@ public class ProviderDaoTest {
 
     @After
     public void tearDown() {
+        providerDao.delete(p1);
 //        providerDao = null;
-        providerDao.delete(testProvider);
+//        providerDao.delete(testProvider);
     }
 
     @Test
     public void saveProviderHibernateTest() {
         Provider provider = getProviderForTest("Nina");
-//        ProviderDao providerDao = new ProviderDaoImpl();
         Provider providerSaved = providerDao.save(provider);
         assertNotNull("A saved provider should have a ID with NULL value",providerSaved.getId());
         assertEquals("The name value should be the same.",provider.getName(),providerSaved.getName());
@@ -142,9 +140,9 @@ public class ProviderDaoTest {
 
     @Test
     public void getProviderByIdTest(){
-        Provider retrieveProvider = providerDao.getProviderById(testProvider.getId());
-        assertEquals("id should be the same",retrieveProvider.getId(),testProvider.getId());
-        assertEquals("name should be the same",retrieveProvider.getName(),testProvider.getName());
+        Provider retrieveProvider = providerDao.getProviderById(p1.getId());
+        assertEquals("id should be the same",retrieveProvider.getId(),p1.getId());
+        assertEquals("name should be the same",retrieveProvider.getName(),p1.getName());
     }
 
 

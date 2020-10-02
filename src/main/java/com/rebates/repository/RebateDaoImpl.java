@@ -10,12 +10,33 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public class RebateDaoImpl implements RebateDao {
     private Logger logger = LoggerFactory.getLogger(RebateDaoImpl.class);
+
+    @Override
+    public Rebate save(Rebate rebate,Provider provider) {
+        Transaction transaction = null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        try{
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(rebate);
+            transaction.commit();
+            session.close();
+        }catch (Exception e){
+            if(transaction != null)
+                transaction.rollback();
+            logger.error("fail to insert record,error=()",e.getMessage());
+            session.close();
+        }
+        return rebate;
+    }
 
     @Override
     public Rebate save(Rebate rebate) {
