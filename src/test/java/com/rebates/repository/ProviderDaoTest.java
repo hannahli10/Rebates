@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -36,7 +33,7 @@ public class ProviderDaoTest {
 //    private Rebate rebate2;
 //    private Transaction transaction1;
 //    private Transaction transaction2;
-////    private LocalDateTime transactionDateTime = new LocalDateTime(2020-05-01,12/30/00);
+
 
     public ProviderDaoTest() {
     }
@@ -122,7 +119,7 @@ public class ProviderDaoTest {
     @Test
     public void getProvidersTest(){
         List<Provider> providerList = providerDao.getProviders();
-        assertEquals("Provider should be have 4 records ",4,providerList.size());
+        assertEquals("Provider should be have 5 records ",4,providerList.size());
 
 
     }
