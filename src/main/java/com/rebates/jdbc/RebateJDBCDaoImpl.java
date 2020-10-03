@@ -17,45 +17,45 @@ public class RebateJDBCDaoImpl implements RebateDao {
     private static final String DB_URL = "jdbc:postgresql://localhost:5430/ascending-14";
     private static final String USER = "admin";
     private static final String PASS = "password";
-    @Override
-    public Rebate save(Rebate rebate, Provider provider) {
-        Rebate createdRebate = null;
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-        try{
-            //STEP 2: Open a connection
-            logger.info("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-            //STEP 3: Execute a query
-            logger.debug("Insert statement...");
-            String SQL_INSERT = "INSERT into Rebates (NAME,LINK,REBETA_TYPE,VALUE) VALUES (?,?,?,?)";;
-            preparedStatement = conn.prepareStatement(SQL_INSERT);
-            preparedStatement.setString(1, rebate.getName());
-            preparedStatement.setString(2,rebate.getLink()) ;
-            preparedStatement.setString(3,rebate.getRebateType());
-            preparedStatement.setBigDecimal(4,rebate.getValue());
-
-
-
-            int row = preparedStatement.executeUpdate();
-            if (row > 0 )
-                createdRebate = rebate;
-
-        }catch(SQLException e){
-            logger.error("save failed(...) for Rebate throws SQLException error"+e.getMessage());
-        }
-        finally {
-//           STEP 4: finally block used to close resources
-            try{
-                if(preparedStatement != null) preparedStatement.close();
-                if(conn != null) conn.close();
-            }catch(SQLException se) {
-                logger.error("save close failed(...) for Rebate throws SQLException error"+se.getMessage());
-            }
-        }
-        return createdRebate;
-    }
+//    @Override
+//    public Rebate save(Rebate rebate, Provider provider) {
+//        Rebate createdRebate = null;
+//        Connection conn = null;
+//        PreparedStatement preparedStatement = null;
+//        try{
+//            //STEP 2: Open a connection
+//            logger.info("Connecting to database...");
+//            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//
+//            //STEP 3: Execute a query
+//            logger.debug("Insert statement...");
+//            String SQL_INSERT = "INSERT into Rebates (NAME,LINK,REBETA_TYPE,VALUE) VALUES (?,?,?,?)";;
+//            preparedStatement = conn.prepareStatement(SQL_INSERT);
+//            preparedStatement.setString(1, rebate.getName());
+//            preparedStatement.setString(2,rebate.getLink()) ;
+//            preparedStatement.setString(3,rebate.getRebateType());
+//            preparedStatement.setBigDecimal(4,rebate.getValue());
+//
+//
+//
+//            int row = preparedStatement.executeUpdate();
+//            if (row > 0 )
+//                createdRebate = rebate;
+//
+//        }catch(SQLException e){
+//            logger.error("save failed(...) for Rebate throws SQLException error"+e.getMessage());
+//        }
+//        finally {
+////           STEP 4: finally block used to close resources
+//            try{
+//                if(preparedStatement != null) preparedStatement.close();
+//                if(conn != null) conn.close();
+//            }catch(SQLException se) {
+//                logger.error("save close failed(...) for Rebate throws SQLException error"+se.getMessage());
+//            }
+//        }
+//        return createdRebate;
+//    }
 
     @Override
     public Rebate save(Rebate rebate) {

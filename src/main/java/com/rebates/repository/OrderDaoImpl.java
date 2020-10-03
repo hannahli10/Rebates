@@ -19,26 +19,6 @@ public class OrderDaoImpl implements OrderDao {
     private Logger logger = LoggerFactory.getLogger(RebateDaoImpl.class);
 
     @Override
-    public Order save(Order order, Rebate rebate) {
-        Transaction transaction = null;
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        try{
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(order);
-            transaction.commit();
-            session.close();
-        }catch (Exception e){
-            if(transaction != null)
-                transaction.rollback();
-            logger.error("fail to insert record,error=()",e.getMessage());
-            session.close();
-        }
-        return order;
-    }
-
-
-    @Override
     public Order save(Order order) {
         Transaction transaction = null;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

@@ -4,14 +4,14 @@
 CREATE TABLE providers(
 /*id             INTEGER NOT NULL default nextval(‘account_id_seq’),*/
     id                BIGSERIAL,
-    name              VARCHAR(30) not null unique
+    name              VARCHAR(30)
 );
 
 
 CREATE TABLE rebates(
 /*id             INTEGER NOT NULL default nextval(‘account_id_seq’),*/
     id                BIGSERIAL,
-    name              VARCHAR(30) not null unique,
+    name              VARCHAR(30) ,
     link              VARCHAR(150),
     rebate_type       VARCHAR(30),
     value             NUMERIC(10, 2),

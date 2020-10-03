@@ -26,6 +26,7 @@ public class RebateDaoTest {
     private Logger logger = LoggerFactory.getLogger(RebateDaoImpl.class);
     @Autowired
     private ProviderDao providerDao;
+    @Autowired
     private RebateDao rebateDao;
     private String testRebate = "Topcashback";
     private Rebate r1;
@@ -46,15 +47,16 @@ public class RebateDaoTest {
     @Before
     public void setUp() {
         p1 = new Provider();
-        p1.setName("Topcashback");
+        p1.setName("test_Ulta");
         providerDao.save(p1);
 
         r1 = new Rebate();
+        r1.setProvider(p1);
         r1.setName(testRebate);
         r1.setLink("www.topcashback.com");
         r1.setValue(rebateValue);
         r1.setRebateType("Cashback");
-        rebateDao.save(r1,p1);
+        rebateDao.save(r1);
 
     }
 
@@ -71,7 +73,7 @@ public class RebateDaoTest {
         Rebate rebateSaved = rebateDao.save(rebate);
         assertNotNull("A saved rebate should have a ID with NULL value",rebateSaved.getId());
         assertEquals("The name value should be the same.",rebate.getName(),rebateSaved.getName());
-        logger.info("Provider = {}",rebateSaved);
+        logger.info("Rebate = {}",rebateSaved);
         rebateDao.delete(rebate);
     }
 
