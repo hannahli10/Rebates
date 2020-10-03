@@ -20,7 +20,6 @@ public class Provider {
     @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 //    @OneToMany(mappedBy = "provider",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Rebate> rebates;
-
     public void addRebate(Rebate rebate){
         this.getRebates().add(rebate);
         rebate.setProvider(this);

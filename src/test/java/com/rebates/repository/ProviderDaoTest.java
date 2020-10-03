@@ -3,11 +3,8 @@ package com.rebates.repository;
 import com.rebates.dao.ProviderDao;
 import com.rebates.init.AppInitializer;
 import com.rebates.model.Provider;
-import com.rebates.model.Rebate;
-import com.rebates.model.Transaction;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

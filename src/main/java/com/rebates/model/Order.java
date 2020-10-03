@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "transactions")
-public class Transaction {
-    public Transaction(){}
+@Table(name = "orders")
+public class Order {
+    public Order(){}
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
 
@@ -16,8 +16,8 @@ public class Transaction {
     private long id;
     @Column(name = "purchase_time")
     private LocalDateTime purchaseTime;
-    @Column(name = "order_id")
-    private String orderId;
+    @Column(name = "order_number")
+    private String orderNumber;
     @Column(name = "amount")
     private BigDecimal amount;
 
@@ -32,21 +32,21 @@ public class Transaction {
     public LocalDateTime getPurchaseTime() {
         return purchaseTime;
     }
-    public String getOrderId() {
-        return orderId;
+    public String getOrderNumber() {
+        return orderNumber;
     }
     public BigDecimal getAmount() {
         return amount;
     }
-
+    public Rebate getRebate() { return rebate; }
 
 
     public void setId(long id) {
         this.id = id;
     }
     public void setPurchaseTime(LocalDateTime purchaseTime) { this.purchaseTime=purchaseTime;}
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
@@ -62,7 +62,7 @@ public class Transaction {
         return "Transaction{" +
                 "id=" + id +
                 ",purchaseTime='"+ purchaseTime + '\'' +
-                ", orderId='" + orderId + '\'' +
+                ", orderNumber='" + orderNumber + '\'' +
                 ", amount=" + amount +
                 '}';
     }

@@ -10,7 +10,7 @@ Insert into Rebates (name,link,rebate_type,value,provider_id) values
 ('United Mileage','https://shopping.mileageplus.com/','Credit card points','3','3');
 commit;
 
-Insert into Transactions (purchase_time,order_id,amount,rebate_id) values
+Insert into Orders (purchase_time,order_number,amount,rebate_id) values
 ('2020-05-01 12:30:00','SF000001','100','1'),
 ('2020-06-01 18:30:40','SG00004','256','3'),
 ('2020-09-14 09:30:00','46575474','23','2');

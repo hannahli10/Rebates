@@ -5,10 +5,8 @@ import com.rebates.dao.RebateDao;
 import com.rebates.init.AppInitializer;
 import com.rebates.model.Provider;
 import com.rebates.model.Rebate;
-import com.rebates.model.Transaction;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -48,16 +46,16 @@ public class RebateDaoTest {
     @Before
     public void setUp() {
         p1 = new Provider();
-        p1.setName("Test-Ulta");
+        p1.setName("Topcashback");
         providerDao.save(p1);
 
         r1 = new Rebate();
         r1.setName(testRebate);
-        r1.setLink("Topcashback");
+        r1.setLink("www.topcashback.com");
         r1.setValue(rebateValue);
         r1.setRebateType("Cashback");
         rebateDao.save(r1,p1);
-//
+
     }
 
     @After

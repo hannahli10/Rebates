@@ -30,11 +30,11 @@ public class Rebate {
     private Provider provider;
 
     @OneToMany (mappedBy = "rebate",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Transaction> transactions;
+    private Set<Order> orders;
 
-    public void addTransaction(Transaction transaction){
-        this.getTransactions().add(transaction);
-        transaction.setRebate(this);
+    public void addOrder(Order order){
+        this.getOrders().add(order);
+        order.setRebate(this);
     }
 
 
@@ -53,14 +53,19 @@ public class Rebate {
     public BigDecimal getValue() {
         return value;
     }
-    public Set<Transaction> getTransactions() {
-        if (transactions == null)
-            transactions = new HashSet<Transaction>();
-        return transactions;
+    public Provider getProvider() {
+        return provider;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
+
+    public Set<Order> getOrders() {
+        if (orders == null)
+            orders = new HashSet<Order>();
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     public void setId(long id) {
@@ -78,7 +83,9 @@ public class Rebate {
     public void setValue(BigDecimal value) {
         this.value = value;
     }
-
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
 
     @Override
     public String toString() {
@@ -91,11 +98,7 @@ public class Rebate {
                 '}';
     }
 
-    public Provider getProvider() {
-        return provider;
-    }
 
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
+
+
 }

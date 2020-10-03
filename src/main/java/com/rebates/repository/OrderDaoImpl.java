@@ -1,7 +1,7 @@
 package com.rebates.repository;
 
-import com.rebates.dao.RebateDao;
-import com.rebates.model.Provider;
+import com.rebates.dao.OrderDao;
+import com.rebates.model.Order;
 import com.rebates.model.Rebate;
 import com.rebates.util.HibernateUtil;
 import org.hibernate.Session;
@@ -10,23 +10,22 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class RebateDaoImpl implements RebateDao {
+public class OrderDaoImpl implements OrderDao {
     private Logger logger = LoggerFactory.getLogger(RebateDaoImpl.class);
 
     @Override
-    public Rebate save(Rebate rebate,Provider provider) {
+    public Order save(Order order, Rebate rebate) {
         Transaction transaction = null;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         try{
             transaction = session.beginTransaction();
-            session.saveOrUpdate(rebate);
+            session.saveOrUpdate(order);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -35,17 +34,18 @@ public class RebateDaoImpl implements RebateDao {
             logger.error("fail to insert record,error=()",e.getMessage());
             session.close();
         }
-        return rebate;
+        return order;
     }
 
+
     @Override
-    public Rebate save(Rebate rebate) {
+    public Order save(Order order) {
         Transaction transaction = null;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         try{
             transaction = session.beginTransaction();
-            session.saveOrUpdate(rebate);
+            session.saveOrUpdate(order);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -54,17 +54,17 @@ public class RebateDaoImpl implements RebateDao {
             logger.error("fail to insert record,error=()",e.getMessage());
             session.close();
         }
-        return rebate;
+        return order;
     }
 
     @Override
-    public Rebate update(Rebate rebate) {
+    public Order update(Order order) {
         Transaction transaction = null;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         try{
             transaction = session.beginTransaction();
-            session.update(rebate);
+            session.update(order);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -73,22 +73,18 @@ public class RebateDaoImpl implements RebateDao {
             logger.error("fail to update record,error=()",e.getMessage());
             session.close();
         }
-        return rebate;
+        return order;
     }
 
-    @Override
-    public boolean deleteByName(String rebateName) {
-        return false;
-    }
 
     @Override
-    public boolean delete(Rebate rebate) {Transaction transaction = null;
+    public boolean delete(Order order) {Transaction transaction = null;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         int deleteCount = 0;
         try{
             transaction = session.beginTransaction();
-            session.delete(rebate);
+            session.delete(order);
             transaction.commit();
             session.close();
         }catch (Exception e){
@@ -102,22 +98,23 @@ public class RebateDaoImpl implements RebateDao {
     }
 
     @Override
-    public List<Rebate> getRebates() { //hql FetchType EAGER through table mapped is LAZY
-        String hql = "From Rebate ";
+    public List<Order> getOrders() { //hql FetchType EAGER through table mapped is LAZY
+        String hql = "From Order ";
         try (Session session = HibernateUtil.getSession()) {
-            Query<Rebate> query = session.createQuery(hql);
+            Query<Order> query = session.createQuery(hql);
             return query.list();
         }
     }
 
     @Override
-    public Rebate getRebateById(Long id) {
+    public Order getOrderById(Long id) {
         if (id == null) return null;
-        String hql = "FROM Rebate as rebate where rebate.id = :id";
+        String hql = "FROM Order as order where order.id = :id";
         try (Session session = HibernateUtil.getSession()){
-            Query<Rebate> query = session.createQuery(hql);
+            Query<Order> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();
         }
     }
 }
+
