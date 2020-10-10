@@ -68,10 +68,10 @@ public class ProviderDaoImpl implements ProviderDao {
     }
 
     @Override
-    public List<Provider> getProviders() {
+    public List<Provider> findAllProviders() {
         //hql FetchType EAGER through table mapped is LAZY
         String hql = "select distinct pro FROM Provider as pro left join fetch pro.rebates as reb left join fetch reb.orders";
-        try (Session session = HibernateUtil.getSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Provider> query = session.createQuery(hql);
             return query.list();
         }
@@ -81,7 +81,7 @@ public class ProviderDaoImpl implements ProviderDao {
     public Provider getProviderById(Long id) {
         if (id == null) return null;
         String hql = "FROM Provider as provider where provider.id = :id";
-        try (Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Provider> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();

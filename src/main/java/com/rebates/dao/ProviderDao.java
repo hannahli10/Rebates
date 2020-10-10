@@ -9,6 +9,6 @@ public interface ProviderDao {
     Provider update (Provider provider);
     boolean deleteByName(String providerName);
     boolean delete (Provider provider);
-    List<Provider> getProviders();
+    List<Provider> findAllProviders();
     Provider getProviderById(Long id);
 }

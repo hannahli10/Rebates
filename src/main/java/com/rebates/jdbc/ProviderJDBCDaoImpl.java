@@ -162,7 +162,7 @@ public class ProviderJDBCDaoImpl implements ProviderDao {
     }
 
     @Override
-    public List<Provider> getProviders() {
+    public List<Provider> findAllProviders() {
         List<Provider> providers = new ArrayList();
         Connection conn = null;
         Statement stmt = null;

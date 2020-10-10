@@ -80,7 +80,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getOrders() { //hql FetchType EAGER through table mapped is LAZY
         String hql = "From Order ";
-        try (Session session = HibernateUtil.getSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Order> query = session.createQuery(hql);
             return query.list();
         }
@@ -90,7 +90,7 @@ public class OrderDaoImpl implements OrderDao {
     public Order getOrderById(Long id) {
         if (id == null) return null;
         String hql = "FROM Order as order where order.id = :id";
-        try (Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Order> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();

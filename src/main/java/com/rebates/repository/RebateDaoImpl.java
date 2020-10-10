@@ -95,7 +95,7 @@ public class RebateDaoImpl implements RebateDao {
     public Rebate getRebateById(Long id) {
         if (id == null) return null;
         String hql = "FROM Rebate as rebate where rebate.id = :id";
-        try (Session session = HibernateUtil.getSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query<Rebate> query = session.createQuery(hql);
             query.setParameter("id",id);
             return query.uniqueResult();
